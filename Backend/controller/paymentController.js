@@ -14,28 +14,6 @@ exports.setStripePayment = async (req, res) => {
   const customer = await stripe.customers.list({ email: req.body.email });
   if (customer.data.length > 0) {
     const customerObj = customer.data[0];
-    //   console.log("----------card------------ ", req.body.token.card.name);
-    //   stripe.charges
-    //     .create(
-    //       {
-    //         amount: req.body.product.quantity * 100,
-    //         currency: "usd",
-    //         customer: customerObj.id,
-    //         receipt_email: req.body.token.email,
-    //         description: req.body.product.name,
-    //         shipping: {
-    //           name: req.body.token.card.name,
-    //           address: { country: req.body.token.card.address_country },
-    //         },
-    //       },
-    //       { idempotencyKey: idempotencyKey }
-    //     )
-    //     .then((result) => {
-    //       console.log("stripe payment", result);
-    //       res.status(200).json({
-    //         message: result,
-    //       });
-    //     });
     const paymentMethods = await stripe.paymentMethods.list({
       customer: customerObj.id,
       type: "card",
